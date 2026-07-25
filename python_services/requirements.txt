@@ -1,0 +1,4 @@
+# ARMS Enterprise Python Dependencies
+PyPDF2>=3.0.0
+mysql-connector-python>=8.0.30
+requests>=2.31.0

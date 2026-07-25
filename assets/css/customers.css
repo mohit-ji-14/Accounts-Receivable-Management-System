@@ -1,0 +1,261 @@
+/* ===========================
+   CUSTOMER PAGE
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.main-container{
+    width:100%;
+    padding:40px;
+}
+
+.customer-container{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    border-radius:25px;
+    overflow:hidden;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+}
+
+/* ================= LEFT ================= */
+
+.left-panel{
+    width:40%;
+    position:relative;
+    padding:60px 40px;
+    color:#fff;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    overflow:hidden;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.15);
+}
+
+.left-content{
+    position:relative;
+    z-index:2;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:60px;
+}
+
+.logo i{
+    font-size:45px;
+}
+
+.logo h1{
+    font-size:32px;
+    margin:0;
+}
+
+.logo span{
+    font-size:13px;
+    opacity:.9;
+}
+
+.left-content h2{
+    font-size:45px;
+    font-weight:700;
+    line-height:1.2;
+    margin-bottom:20px;
+}
+
+.left-content h2 span{
+    color:#dbeafe;
+}
+
+.left-content p{
+    line-height:1.8;
+    opacity:.9;
+    margin-bottom:45px;
+}
+
+/* ================= FEATURES ================= */
+
+.features{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.feature{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:rgba(255,255,255,.12);
+    padding:15px 20px;
+    border-radius:15px;
+}
+
+.feature i{
+    font-size:28px;
+}
+
+.feature h5{
+    margin:0;
+    font-size:18px;
+}
+
+/* ================= RIGHT ================= */
+
+.right-panel{
+    width:60%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:50px;
+}
+
+.login-card{
+    width:100%;
+    background:#fff;
+    border-radius:25px;
+    padding:45px;
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+}
+
+.login-card h2{
+    font-size:34px;
+    font-weight:700;
+    color:#1e3a8a;
+}
+
+.login-card p{
+    color:#6b7280;
+    margin-bottom:30px;
+}
+
+/* ================= INPUT ================= */
+
+.input-box{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.input-box i{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#2563eb;
+    font-size:18px;
+}
+
+.input-box input,
+.input-box textarea{
+    width:100%;
+    padding:14px 18px 14px 50px;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    outline:none;
+    transition:.3s;
+    font-size:15px;
+}
+
+.input-box textarea{
+    resize:none;
+    padding-top:16px;
+}
+
+.input-box input:focus,
+.input-box textarea:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 12px rgba(37,99,235,.25);
+}
+
+/* ================= BUTTON ================= */
+
+.button-group{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
+
+.login-btn{
+    flex:1;
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    padding:14px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+.back-btn{
+    flex:1;
+    text-decoration:none;
+    text-align:center;
+    padding:14px;
+    border-radius:12px;
+    background:#e5e7eb;
+    color:#111827;
+    font-weight:600;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#d1d5db;
+    color:#111827;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+.customer-container{
+    flex-direction:column;
+}
+
+.left-panel,
+.right-panel{
+    width:100%;
+}
+
+.left-panel{
+    padding:40px;
+}
+
+.right-panel{
+    padding:25px;
+}
+
+.login-card{
+    padding:30px;
+}
+
+.button-group{
+    flex-direction:column;
+}
+
+}
