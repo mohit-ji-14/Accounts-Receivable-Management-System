@@ -64,7 +64,7 @@ try {
             </div>
             <div class="d-flex gap-2">
                 <a href="run_python_reminders.php" class="btn btn-indigo text-white btn-sm px-3" style="background-color: #4f46e5;">
-                    <i class="bi bi-cpu-fill me-1"></i> Run Python Auto-Cron Reminders
+                    <i class="bi bi-cpu-fill me-1"></i>  Auto-Collection Reminders
                 </a>
                 <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer me-1"></i> Print Aging Report</button>
             </div>

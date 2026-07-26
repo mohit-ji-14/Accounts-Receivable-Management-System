@@ -39,8 +39,13 @@ try {
     $pay_stmt = $conn->prepare("SELECT * FROM payments WHERE invoice_id = ? ORDER BY payment_id DESC");
     $pay_stmt->execute([$id]);
     $payments = $pay_stmt->fetchAll(PDO::FETCH_ASSOC);
+    //gst add
+    $subtotal = $invoice['total_amount'];
+    $gst_rate = 18;
+    $gst_amount = ($subtotal * $gst_rate) / 100;
+    $grand_total = $subtotal + $gst_amount;
 
-    $balance_due = max(0, $invoice['total_amount'] - $invoice['paid_amount']);
+    $balance_due = max(0, $grand_total - $invoice['paid_amount']);
     $is_overdue = ($invoice['status'] === 'Overdue') || ($invoice['due_date'] < date('Y-m-d') && $invoice['status'] !== 'Paid');
     $curr = $invoice['currency_code'] ?? 'INR';
 
@@ -69,7 +74,7 @@ include "../includes/sidebar.php";
             </div>
 
             <div class="d-flex gap-2">
-                <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer me-1"></i> Print Invoice</button>
+                <button onclick="window.print()" class="btn btn-outline-primary btn-sm"><i class="bi bi-printer me-1"></i> Print Invoice</button>
                 <?php if ($balance_due > 0): ?>
                     <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#payOnlineModal">
                         <i class="bi bi-qr-code-scan me-1"></i> Pay Online QR
@@ -99,6 +104,7 @@ include "../includes/sidebar.php";
                     </div>
                     <div class="text-dark  fw-bold small">Global Accounts Receivable & Treasury Operations</div>
                     <div class="text-dark fw-bold small">SWIFT / IBAN Billing Support: treasury@arms-global.com</div>
+                    <div class="text-dark fw-bold small">GSTIN: 03ABCDE1234F1Z5</div>
                 </div>
 
                 <div class="col-6 text-end">
@@ -123,7 +129,7 @@ include "../includes/sidebar.php";
             <div class="row mb-4">
                 <div class="col-6">
                     <div class="text-uppercase small fw-bold text-dark mb-2">BILLED TO:</div>
-                    <h5 class="fw-bold mb-1"><?= htmlspecialchars($invoice['customer_name']) ?></h5>
+                    <h5 class="fw-bold text-dark mb-1"><?= htmlspecialchars($invoice['customer_name']) ?></h5>
                     <?php if ($invoice['company_name']): ?>
                         <div class="fw-semibold text-secondary mb-1"><?= htmlspecialchars($invoice['company_name']) ?></div>
                     <?php endif; ?>
@@ -134,17 +140,22 @@ include "../includes/sidebar.php";
 
                 <div class="col-6 text-end">
                     <div class="bg-light p-3 rounded d-inline-block text-start border" style="min-width: 260px;">
+
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-dark small">Invoice Id:</span>
+                            <span class="fw-semibold text-dark small"><?= $invoice['invoice_id'] ?></span>
+                        </div>
                         <div class="d-flex justify-content-between mb-1">
                             <span class="text-dark small">Invoice Date:</span>
-                            <span class="fw-semibold small"><?= date('d M Y', strtotime($invoice['invoice_date'])) ?></span>
+                            <span class="fw-semibold text-dark small"><?= date('d M Y', strtotime($invoice['invoice_date'])) ?></span>
                         </div>
                         <div class="d-flex justify-content-between mb-1">
                             <span class="text-dark small">Due Date:</span>
-                            <span class="fw-bold small <?= $is_overdue ? 'text-danger' : '' ?>"><?= date('d M Y', strtotime($invoice['due_date'])) ?></span>
+                            <span class="fw-semibold text-dark small <?= $is_overdue ? 'text-dark' : '' ?>"><?= date('d M Y', strtotime($invoice['due_date'])) ?></span>
                         </div>
                         <div class="d-flex justify-content-between mb-1">
                             <span class="text-dark small">Currency:</span>
-                            <span class="fw-bold small"><?= $curr ?></span>
+                            <span class="fw-bold text-dark small"><?= $curr ?></span>
                         </div>
                         <div class="d-flex justify-content-between border-top pt-1 mt-1">
                             <span class="text-dark small">Balance Due:</span>
@@ -197,15 +208,19 @@ include "../includes/sidebar.php";
                 <div class="col-md-6">
                     <div class="bg-light p-3 rounded border">
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Total Invoice Billed:</span>
-                            <span class="fw-bold fs-5"><?= format_currency($invoice['total_amount'], $curr) ?></span>
+                            <span class="text-dark">Total Invoice Billed:</span>
+                            <span class="fw-bold text-dark fs-5"><?= format_currency($invoice['total_amount'], $curr) ?></span>
                         </div>
+                         <div class="d-flex justify-content-between mb-2">
+                         <span class="text-dark">GST (18%):</span>
+                         <span class="fw-bold text-dark "><?= format_currency($gst_amount, $curr) ?></span>
+                         </div>
                         <div class="d-flex justify-content-between mb-2 text-success">
                             <span>Amount Paid:</span>
                             <span class="fw-bold">- <?= format_currency($invoice['paid_amount'], $curr) ?></span>
                         </div>
                         <div class="d-flex justify-content-between border-top pt-2 mt-2">
-                            <span class="fw-bold fs-6">Remaining Balance Due:</span>
+                            <span class="fw-bold text-dark fs-6">Remaining Balance Due:</span>
                             <span class="fw-bold fs-5 text-danger"><?= format_currency($balance_due, $curr) ?></span>
                         </div>
                     </div>
@@ -222,9 +237,9 @@ include "../includes/sidebar.php";
             <!-- Payment Receipts -->
             <?php if (count($payments) > 0): ?>
                 <div class="mt-4 pt-3 border-top">
-                    <h6 class="fw-bold mb-3"><i class="bi bi-receipt text-success me-2"></i> Payment Receipts Applied</h6>
+                    <h6 class="fw-bold text-dark mb-3"><i class="bi bi-receipt text-success me-2"></i> Payment Receipts Applied</h6>
                     <table class="table table-sm table-bordered">
-                        <thead class="table-light">
+                        <thead class="table-dark">
                             <tr>
                                 <th>Receipt Date</th>
                                 <th>Method</th>

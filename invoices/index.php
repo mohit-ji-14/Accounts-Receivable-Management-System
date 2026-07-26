@@ -148,7 +148,7 @@ try {
                                 <tr>
                                     <td class="fw-bold text-indigo"><?= htmlspecialchars($inv['invoice_number']) ?></td>
                                     <td>
-                                        <div class="fw-semibold text-dark"><?= htmlspecialchars($inv['customer_name']) ?></div>
+                                        <div class="fw-semibold text-white"><?= htmlspecialchars($inv['customer_name']) ?></div>
                                         <div class="text-muted small"><?= htmlspecialchars($inv['company_name'] ?: 'Individual Client') ?></div>
                                     </td>
                                     <td class="small"><?= date('d M Y', strtotime($inv['invoice_date'])) ?></td>

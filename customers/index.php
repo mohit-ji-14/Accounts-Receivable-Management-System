@@ -104,7 +104,7 @@ try {
                             ?>
                                 <tr>
                                     <td>
-                                        <div class="fw-bold text-dark"><?= htmlspecialchars($c['customer_name']) ?></div>
+                                        <div class="fw-bold text-white"><?= htmlspecialchars($c['customer_name']) ?></div>
                                         <div class="text-muted small"><?= htmlspecialchars($c['company_name'] ?: 'Individual Client') ?> &bull; <span class="text-secondary"><?= htmlspecialchars($c['entity_name'] ?: 'Global') ?></span></div>
                                     </td>
                                     <td>

@@ -8,8 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once "../config/database.php";
 
-$page_title = "Python Automated Reminders Runner";
-$page_header = "Python Reminders Cron Execution";
+$page_title = "Automated Reminders Runner";
+$page_header = "Reminders Cron Execution";
 
 include "../includes/header.php";
 include "../includes/sidebar.php";
@@ -93,7 +93,7 @@ if (!$output_json) {
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h4 class="fw-bold mb-1"><i class="bi bi-cpu-fill text-primary me-2"></i> Python Automated Collection Reminders Engine</h4>
+                <h4 class="fw-bold mb-1"><i class="bi bi-cpu-fill text-primary me-2"></i> Automated Collection Reminders Engine</h4>
                 <p class="text-muted small mb-0">Executed via: <span class="badge bg-indigo-light text-indigo border"><?= $execution_method ?></span></p>
             </div>
             <a href="index.php" class="btn btn-outline-secondary btn-sm">
@@ -105,7 +105,7 @@ if (!$output_json) {
             <div class="card-custom p-4 mb-4 border-start border-4 border-success">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="fw-bold text-success mb-1"><i class="bi bi-check-circle-fill me-2"></i> Python Cron Execution Successful!</h5>
+                        <h5 class="fw-bold text-success mb-1"><i class="bi bi-check-circle-fill me-2"></i>Execution Successful!</h5>
                         <p class="text-muted small mb-0">Found <strong><?= $output_json['total_overdue_found'] ?></strong> overdue invoice(s). Queued <strong><?= $output_json['total_reminders_queued'] ?></strong> email reminder notices.</p>
                     </div>
                     <span class="badge bg-light text-dark border font-monospace"><?= $output_json['timestamp'] ?></span>

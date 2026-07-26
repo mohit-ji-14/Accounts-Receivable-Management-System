@@ -57,7 +57,7 @@ try {
         <?php endif; ?>
 
         <!-- Total Collections Banner -->
-        <div class="card-custom p-4 mb-4 bg-white border-start border-4 border-success">
+        <div class="card-custom p-4 mb-4 bg-blue border-start border-4 border-success">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <div class="text-muted small fw-semibold">TOTAL COLLECTIONS RECORDED</div>
@@ -97,7 +97,7 @@ try {
                                         </a>
                                     </td>
                                     <td>
-                                        <div class="fw-semibold text-dark"><?= htmlspecialchars($p['customer_name']) ?></div>
+                                        <div class="fw-semibold text-white"><?= htmlspecialchars($p['customer_name']) ?></div>
                                         <div class="text-muted small"><?= htmlspecialchars($p['company_name'] ?: 'Individual Client') ?></div>
                                     </td>
                                     <td>
