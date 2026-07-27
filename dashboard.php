@@ -12,26 +12,25 @@ require_once "config/currency.php";
 $page_title = "Executive Dashboard";
 $page_header = "Enterprise Financial Analytics";
 
-// Handle Entity Switcher
-if (isset($_GET['entity_id'])) {
-    $_SESSION['selected_entity'] = intval($_GET['entity_id']);
-}
+include "includes/header.php";
+include "includes/sidebar.php";
+
 $entity_filter = $_SESSION['selected_entity'] ?? 0;
 
 $where_clause = "";
 $entity_param = [];
+
 if ($entity_filter > 0) {
     $where_clause = "WHERE entity_id = ?";
     $entity_param = [$entity_filter];
 }
 
-include "includes/header.php";
-include "includes/sidebar.php";
-
 try {
     // 1. Total Customers
-    $cust_sql = "SELECT COUNT(*) FROM customers " . ($entity_filter > 0 ? "WHERE entity_id = $entity_filter" : "");
-    $total_customers = $conn->query($cust_sql)->fetchColumn();
+    $cust_sql = "SELECT COUNT(*) FROM customers " . ($entity_filter > 0 ? "WHERE entity_id = ?" : "");
+    $cust_stmt = $conn->prepare($cust_sql);
+    $cust_stmt->execute($entity_param);
+    $total_customers = $cust_stmt->fetchColumn();
 
     // 2. Financial Metrics (In Base Currency Equivalent)
     $fin_sql = "
@@ -70,16 +69,18 @@ try {
             COALESCE(SUM(CASE WHEN DATEDIFF(CURRENT_DATE(), due_date) BETWEEN 61 AND 90 AND status != 'Paid' THEN ((total_amount - paid_amount) * fx_rate) ELSE 0 END), 0) AS aging_61_90,
             COALESCE(SUM(CASE WHEN DATEDIFF(CURRENT_DATE(), due_date) > 90 AND status != 'Paid' THEN ((total_amount - paid_amount) * fx_rate) ELSE 0 END), 0) AS aging_90_plus
         FROM invoices
-        WHERE status != 'Paid' " . ($entity_filter > 0 ? "AND entity_id = $entity_filter" : "") . "
+        WHERE status != 'Paid' " . ($entity_filter > 0 ? "AND entity_id = ?" : "") . "
     ";
-    $aging = $conn->query($aging_sql)->fetch(PDO::FETCH_ASSOC);
+    $aging_stmt = $conn->prepare($aging_sql);
+    $aging_stmt->execute($entity_param);
+    $aging = $aging_stmt->fetch(PDO::FETCH_ASSOC);
 
     // 6. Recent Invoices
     $recent_inv_sql = "
         SELECT i.*, c.customer_name, c.company_name 
         FROM invoices i
         JOIN customers c ON i.customer_id = c.customer_id
-        $where_clause
+        " . ($entity_filter > 0 ? "WHERE i.entity_id = ?" : "") . "
         ORDER BY i.invoice_id DESC LIMIT 5
     ";
     $recent_inv_stmt = $conn->prepare($recent_inv_sql);
@@ -283,7 +284,7 @@ try {
 
                     <div class="mb-3 p-3 rounded border border-secondary border-opacity-25 bg-dark bg-opacity-50">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="fw-bold small text-white">🇺🇸 ARMS North America Inc.</span>
+                            <span class="fw-bold small text-white">🇺🇸 ARM North America Inc.</span>
                             <span class="badge bg-primary-subtle text-primary border border-primary">Active</span>
                         </div>
                         <div class="text-muted small">Base Currency: USD ($)</div>

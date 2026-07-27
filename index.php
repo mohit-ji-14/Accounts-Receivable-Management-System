@@ -88,12 +88,12 @@ $error = $_GET['error'] ?? '';
         </div>
     <?php endif; ?>
 
-    <form action="auth/login.php" method="POST" class="text-start">
+    <form action="auth/login.php" method="POST" autocomplete="off" class="text-start">
         <div class="mb-3">
             <label class="form-label small fw-semibold text-secondary">Email Address</label>
             <div class="input-group">
                 <span class="input-group-text bg-light text-secondary"><i class="bi bi-envelope"></i></span>
-                <input type="email" name="email" class="form-control" placeholder="name@company.com" value="mohit.an.1431@gmail.com" required>
+                <input type="email" autocomplete="off" name="email" class="form-control" placeholder="name@company.com"  required>
             </div>
         </div>
 
@@ -101,7 +101,7 @@ $error = $_GET['error'] ?? '';
             <label class="form-label small fw-semibold text-secondary">Password</label>
             <div class="input-group">
                 <span class="input-group-text bg-light text-secondary"><i class="bi bi-lock"></i></span>
-                <input type="password" name="password" class="form-control" placeholder="••••••••" value="mohit2912" required>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
             </div>
         </div>
 

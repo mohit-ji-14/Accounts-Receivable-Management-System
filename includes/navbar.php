@@ -3,6 +3,7 @@ $user_name = $_SESSION['name'] ?? 'Administrator';
 $user_role = $_SESSION['role'] ?? 'System Admin';
 $initial = strtoupper(substr($user_name, 0, 1));
 $selected_entity = $_SESSION['selected_entity'] ?? 0;
+$csrf_token = $_SESSION['csrf_token'] ?? '';
 ?>
 <div class="top-navbar">
     <div class="d-flex align-items-center gap-3">
@@ -15,7 +16,8 @@ $selected_entity = $_SESSION['selected_entity'] ?? 0;
         </span>
 
         <!-- Entity / Subsidiary Switcher -->
-        <form method="GET" action="" class="d-none d-lg-block">
+        <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" class="d-none d-lg-block">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
             <select name="entity_id" class="form-select form-select-sm" onchange="this.form.submit()" style="min-width: 220px;">
                 <option value="0" <?= $selected_entity == 0 ? 'selected' : '' ?>>🌐 Global Consolidated View</option>
                 <option value="1" <?= $selected_entity == 1 ? 'selected' : '' ?>>🇮🇳 ARMS Global HQ (India)</option>

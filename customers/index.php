@@ -15,32 +15,68 @@ $page_header = "Client & Credit Risk Management";
 include "../includes/header.php";
 include "../includes/sidebar.php";
 
+$entity_filter = $_SESSION['selected_entity'] ?? 0;
+
 $search = trim($_GET['search'] ?? '');
 
 try {
     if ($search !== '') {
-        $stmt = $conn->prepare("
-            SELECT c.*, e.entity_name,
-                   COALESCE(SUM((i.total_amount - i.paid_amount) * i.fx_rate), 0) AS current_balance
-            FROM customers c
-            LEFT JOIN entities e ON c.entity_id = e.entity_id
-            LEFT JOIN invoices i ON c.customer_id = i.customer_id AND i.status != 'Paid'
-            WHERE c.customer_name LIKE ? OR c.company_name LIKE ? OR c.email LIKE ?
-            GROUP BY c.customer_id
-            ORDER BY c.customer_id DESC
-        ");
-        $term = "%$search%";
-        $stmt->execute([$term, $term, $term]);
+        $term = '%' . $search . '%';
+        $sql = "
+    SELECT c.*, e.entity_name,
+    COALESCE(SUM((i.total_amount - i.paid_amount) * i.fx_rate), 0) AS current_balance
+    FROM customers c
+    LEFT JOIN entities e ON c.entity_id = e.entity_id
+    LEFT JOIN invoices i ON c.customer_id = i.customer_id AND i.status != 'Paid'
+    WHERE (
+    c.customer_name LIKE ?
+    OR c.company_name LIKE ?
+    OR c.email LIKE ?
+    )";
+
+        if ($entity_filter > 0) {
+            $sql .= " AND c.entity_id = ?";
+        }
+
+        $sql .= "
+    GROUP BY c.customer_id
+    ORDER BY c.customer_id DESC
+    ";
+
+        $stmt = $conn->prepare($sql);
+
+        $params = [$term, $term, $term];
+
+        if ($entity_filter > 0) {
+            $params[] = $entity_filter;
+        }
+
+        $stmt->execute($params);
     } else {
-        $stmt = $conn->query("
-            SELECT c.*, e.entity_name,
-                   COALESCE(SUM((i.total_amount - i.paid_amount) * i.fx_rate), 0) AS current_balance
-            FROM customers c
-            LEFT JOIN entities e ON c.entity_id = e.entity_id
-            LEFT JOIN invoices i ON c.customer_id = i.customer_id AND i.status != 'Paid'
-            GROUP BY c.customer_id
-            ORDER BY c.customer_id DESC
-        ");
+       $sql = "
+        SELECT c.*, e.entity_name,
+        COALESCE(SUM((i.total_amount - i.paid_amount) * i.fx_rate), 0) AS current_balance
+        FROM customers c
+        LEFT JOIN entities e ON c.entity_id = e.entity_id
+        LEFT JOIN invoices i ON c.customer_id = i.customer_id AND i.status != 'Paid'
+        ";
+
+        if ($entity_filter > 0) {
+        $sql .= " WHERE c.entity_id = ?";
+        }
+
+        $sql .= "
+        GROUP BY c.customer_id
+        ORDER BY c.customer_id DESC
+        ";
+
+        $stmt = $conn->prepare($sql);
+
+        if ($entity_filter > 0) {
+        $stmt->execute([$entity_filter]);
+        } else {
+        $stmt->execute();
+}
     }
     $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

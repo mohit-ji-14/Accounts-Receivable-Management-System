@@ -98,7 +98,7 @@ try {
                     <a href="index.php?status=Paid" class="btn btn-outline-success <?= $status_filter === 'Paid' ? 'active fw-bold' : '' ?>">Paid</a>
                 </div>
 
-                <form method="GET" action="index.php" class="d-flex align-items-center gap-2">
+                <form method="POST" action="index.php" class="d-flex align-items-center gap-2">
                     <?php if ($status_filter): ?>
                         <input type="hidden" name="status" value="<?= htmlspecialchars($status_filter) ?>">
                     <?php endif; ?>
