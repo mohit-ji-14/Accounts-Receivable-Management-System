@@ -30,10 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $payment_terms = trim($_POST['payment_terms'] ?? 'Net 30');
     $risk_level    = trim($_POST['risk_level'] ?? 'Low');
     $credit_hold   = isset($_POST['credit_hold']) ? 1 : 0;
+    $create_login = isset($_POST['create_login']);
+    $login_password = trim($_POST['login_password'] ?? '');
 
     if (empty($customer_name)) {
         $error = "Client Account Name is required.";
-    } else {
+    } elseif($create_login && empty($email)){
+        $error = "Email is required to create login acoount";
+    } elseif ($create_login && empty($login_password)){
+    $error ="password is reduired to create login account";
+    }
+        else {
         try {
             $stmt = $conn->prepare("
                 INSERT INTO customers 
@@ -41,6 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ");
             $stmt->execute([$entity_id, $customer_name, $company_name, $email, $phone, $address, $city, $state, $country, $currency_code, $credit_limit, $payment_terms, $risk_level, $credit_hold]);
+             $customer_id = $conn->lastInsertId();
+                if($create_login){
+                $hashed_password =password_hash($login_password,PASSWORD_DEFAULT);
+                $stmt = $conn->prepare("insert into users(full_name,email,password,role,entity_id,customer_id) values (?,?,?,?,?,?)");
+                $stmt->execute([$customer_name,$email,$hashed_password,'customer',$entity_id,$customer_id]);
+                }
 
             header("Location: index.php?msg=" . urlencode("Corporate account registered successfully!"));
             exit();
@@ -173,7 +186,33 @@ include "../includes/sidebar.php";
                         </div>
                     </div>
 
-                    <div class="col-12 mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+                    <div class="col-12">
+                            <hr>
+
+                                <h6 class="fw-bold">
+                                <i class="bi bi-person-lock"></i>
+                                Customer Login Account
+                                </h6>
+
+                                    <div class="form-check mb-3">
+                                    <input class="form-check-input"type="checkbox"id="create_login"name="create_login">
+
+                                    <label style = 'letter-spacing:2px;'class="form-check-label small" for="create_login">
+                                    Create Login  Account for this Customer
+                                    </label>
+                            </div>
+                        </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Login Password</label>
+
+                                     <input type="password"
+                                     class="form-control"
+                                    name="login_password"
+                                    placeholder="Enter Password">
+                                </div>
+
+                        <div class="col-12 mt-4 pt-3 border-top d-flex justify-content-end gap-2">
                         <a href="index.php" class="btn btn-light px-4">Cancel</a>
                         <button type="submit" class="btn btn-primary px-4">Save Corporate Account</button>
                     </div>

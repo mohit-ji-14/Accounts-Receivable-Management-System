@@ -70,7 +70,7 @@ if (!$output_json) {
 
             // Log activity
             $log = $conn->prepare("INSERT INTO activity_logs (user_name, activity, ip_address) VALUES (?, ?, ?)");
-            $log->execute(["Python Reminders Engine", "Queued $notice for Invoice #" . $inv['invoice_number'], "127.0.0.1"]);
+            $log->execute(["Reminders Engine", "Queued $notice for Invoice #" . $inv['invoice_number'], "127.0.0.1"]);
         }
 
         $output_json = [

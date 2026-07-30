@@ -109,7 +109,14 @@ $error = $_GET['error'] ?? '';
             Sign In to System <i class="bi bi-arrow-right ms-1"></i>
         </button>
     </form>
+    <div class="text-center mt-3">
+        <a href="customers/login.php" class="text-decoration-none fw-semibold">
+        <i class="bi bi-person-badge"></i>
+        Customer Portal Login
+        </a>
+    </div>
 </div>
+
 
 </body>
 </html>

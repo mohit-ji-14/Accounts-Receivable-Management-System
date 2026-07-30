@@ -228,8 +228,8 @@ include "../includes/sidebar.php";
             </div>
 
             <?php if ($invoice['notes']): ?>
-                <div class="mb-4 p-3 bg-light rounded border">
-                    <div class="fw-semibold text-dark small mb-1"><i class="bi bi-info-circle me-1"></i> Wire Transfer Notes & SWIFT Details:</div>
+                <div class="mb-4 p-3 bg-dark rounded border">
+                    <div class="fw-semibold text-muted small mb-1"><i class="bi bi-info-circle me-1"></i> Wire Transfer Notes & SWIFT Details:</div>
                     <div class="text-muted small"><?= nl2br(htmlspecialchars($invoice['notes'])) ?></div>
                 </div>
             <?php endif; ?>
