@@ -21,12 +21,8 @@ CREATE TABLE users (
     role ENUM('System Admin','Finance Manager','Collector','Auditor','Customer') DEFAULT 'Finance Manager',
     entity_id INT DEFAULT 1,
     customer_id int null,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_users_customer
-    FOREIGN KEY (customer_id)
-    REFERENCES customers(customer_id)
-    ON DELETE SET NULL
-);
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+    
 
 -- =========================================
 -- SUBSIDIARIES / ENTITIES TABLE (Multi-Company)
@@ -128,6 +124,12 @@ CREATE TABLE activity_logs (
     ip_address VARCHAR(45) DEFAULT '127.0.0.1',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+alter TABLE users 
+add CONSTRAINT fk_users_customers
+FOREIGN KEY (customer_id)
+REFERENCES customers(customer_id)
+ON DELETE SET NULL;
+
 
 -- =========================================
 -- MNC INITIAL DEMO DATA
@@ -140,9 +142,12 @@ INSERT INTO entities (entity_id, entity_name, country, base_currency, tax_id) VA
 (3, 'ARMS Europe GmbH', 'Germany', 'EUR', 'DE123456789');
 
 -- Users
-INSERT INTO users (id, full_name, email, password, role, entity_id) VALUES
-(1, 'Administrator', 'mohit.an.1431@gmail.com', 'mohit2912', 'System Admin', 1),
-(2, 'Sarah Jenkins', 'sarah.j@arms-global.com', 'admin123', 'Finance Manager', 2);
+INSERT INTO users (id, full_name, email, password, role, entity_id, customer_id) VALUES
+(1, 'Administrator', 'mohit.an.1431@gmail.com', 'mohit2912', 'System Admin', 1, NULL),
+(2, 'Sarah Jenkins', 'sarah.j@arms-global.com', 'admin123', 'Finance Manager', 2, NULL),
+(3, 'Rahul Sharma', 'rahul@acmetech.com', 'customer123', 'Customer', 1, 1),
+(4, 'David Miller', 'david@apexcloud.com', 'customer123', 'Customer', 2, 2);
+
 
 -- Customers with Risk Levels & Currencies
 INSERT INTO customers (customer_id, entity_id, customer_name, company_name, email, phone, address, city, state, country, currency_code, credit_limit, payment_terms, risk_level, credit_hold) VALUES

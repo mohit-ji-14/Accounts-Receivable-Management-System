@@ -13,18 +13,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     try {
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND role != 'customer' LIMIT 1");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
             // Support both plain text legacy & hashed passwords
             if ($password === $user["password"] || password_verify($password, $user["password"])) {
-
+                session_regenerate_id(true);
                 $_SESSION["user_id"] = $user["id"];
                 $_SESSION["name"] = $user["full_name"];
                 $_SESSION["role"] = $user["role"];
                 $_SESSION["email"] = $user["email"];
+                
 
                 // Log Activity
                 $log_stmt = $conn->prepare("INSERT INTO activity_logs (user_id, activity) VALUES (?, ?)");

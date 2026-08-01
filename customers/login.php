@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['customer_id'])) {
-    header("Location: dashboard.php");
+    header("Location: customer_dashboard.php");
     exit();
 }
 

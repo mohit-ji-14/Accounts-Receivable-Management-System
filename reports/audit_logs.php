@@ -37,7 +37,7 @@ try {
                 <h4 class="fw-bold mb-1"><i class="bi bi-journal-check text-indigo me-2"></i> Audit Trail & Compliance Log</h4>
                 <p class="text-muted small mb-0">Immutable records of all financial transactions, logins, and system events</p>
             </div>
-            <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer me-1"></i> Print Audit Log</button>
+            <button onclick="window.print()" class="btn btn-outline-white btn-sm"><i class="bi bi-printer me-1"></i> Print Audit Log</button>
         </div>
 
         <!-- Audit Table -->
