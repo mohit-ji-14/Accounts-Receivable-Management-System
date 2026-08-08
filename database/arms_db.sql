@@ -147,35 +147,3 @@ INSERT INTO users (id, full_name, email, password, role, entity_id, customer_id)
 (2, 'Sarah Jenkins', 'sarah.j@arms-global.com', 'admin123', 'Finance Manager', 2, NULL),
 (3, 'Rahul Sharma', 'rahul@acmetech.com', 'customer123', 'Customer', 1, 1),
 (4, 'David Miller', 'david@apexcloud.com', 'customer123', 'Customer', 2, 2);
-
-
--- Customers with Risk Levels & Currencies
-INSERT INTO customers (customer_id, entity_id, customer_name, company_name, email, phone, address, city, state, country, currency_code, credit_limit, payment_terms, risk_level, credit_hold) VALUES
-(1, 1, 'Rahul Sharma', 'Acme Tech Solutions', 'rahul@acmetech.com', '+91 98765 43210', '102 Tech Park, MG Road', 'Bengaluru', 'Karnataka', 'India', 'INR', 200000.00, 'Net 30', 'Low', 0),
-(2, 2, 'David Miller', 'Apex Cloud USA Inc', 'david@apexcloud.com', '+1 (555) 234-5678', '500 Technology Way', 'Austin', 'Texas', 'United States', 'USD', 50000.00, 'Net 15', 'Medium', 0),
-(3, 3, 'Hans Mueller', 'Bavaria Logistics GmbH', 'hans@bavaria-logistics.de', '+49 89 123456', 'Industriestrasse 12', 'Munich', 'Bavaria', 'Germany', 'EUR', 40000.00, 'Net 30', 'Low', 0),
-(4, 1, 'Priya Patel', 'Global Enterprise Ltd', 'priya@globallogistics.in', '+91 98123 45678', 'Commercial Complex', 'Mumbai', 'Maharashtra', 'India', 'INR', 150000.00, 'Net 30', 'High', 1);
-
--- Invoices with FX & Multi-Currency
-INSERT INTO invoices (invoice_id, entity_id, customer_id, invoice_number, invoice_date, due_date, currency_code, fx_rate, subtotal, tax_amount, total_amount, paid_amount, status, notes) VALUES
-(1, 1, 1, 'INV-2026-001', '2026-06-01', '2026-07-01', 'INR', 1.0000, 25000.00, 0.00, 25000.00, 25000.00, 'Paid', 'Enterprise Software Support'),
-(2, 2, 2, 'INV-2026-002', '2026-06-15', '2026-06-30', 'USD', 85.0000, 12000.00, 0.00, 12000.00, 3000.00, 'Overdue', 'Cloud Migration Consulting'),
-(3, 3, 3, 'INV-2026-003', '2026-07-10', '2026-08-10', 'EUR', 92.5000, 8500.00, 0.00, 8500.00, 0.00, 'Pending', 'SAP ERP Maintenance'),
-(4, 1, 4, 'INV-2026-004', '2026-05-10', '2026-06-10', 'INR', 1.0000, 45000.00, 0.00, 45000.00, 0.00, 'Overdue', 'Data Center Colocation');
-
--- Invoice Items
-INSERT INTO invoice_items (invoice_id, item_name, quantity, unit_price, total) VALUES
-(1, 'Enterprise Software Annual SLA', 1, 25000.00, 25000.00),
-(2, 'Cloud AWS Architecture Consulting (Hours)', 60, 200.00, 12000.00),
-(3, 'SAP S/4HANA Module Implementation', 1, 8500.00, 8500.00),
-(4, 'Server Rack Colocation & Managed Security', 1, 45000.00, 45000.00);
-
--- Payments
-INSERT INTO payments (invoice_id, payment_date, amount, currency_code, fx_rate, payment_method, reference_no, remarks) VALUES
-(1, '2026-06-20', 25000.00, 'INR', 1.0000, 'Wire Transfer', 'NEFT-8839210', 'Full Payment Settled'),
-(2, '2026-06-28', 3000.00, 'USD', 85.0000, 'ACH', 'ACH-99482103', 'Part Payment Received');
-
--- Activity Log Initial entries
-INSERT INTO activity_logs (user_id, user_name, activity, ip_address) VALUES
-(1, 'Administrator', 'MNC System Initialized', '127.0.0.1'),
-(1, 'Administrator', 'Imported Multi-Currency Schema', '127.0.0.1');

@@ -48,4 +48,4 @@ if ($hour < 12) {
             <?= $initial ?>
         </div>
     </div>
-</div>
+</div>
