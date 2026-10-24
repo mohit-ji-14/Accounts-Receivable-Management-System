@@ -41,7 +41,7 @@ $base_url = '/ARMS/';
 require_once __DIR__ . '/../config/currency.php';
 ?>
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +61,8 @@ require_once __DIR__ . '/../config/currency.php';
     <!-- Chart.js CDN for Enterprise Financial Charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-    <!-- Custom Glassmorphic Dashboard Styles -->
+    <!-- Shared application styles -->
     <link rel="stylesheet" href="<?= $base_url ?>assets/css/dashboard.css">
+    <link rel="stylesheet" href="<?= $base_url ?>assets/css/app.css">
 </head>
 <body>

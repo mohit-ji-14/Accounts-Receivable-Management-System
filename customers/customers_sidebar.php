@@ -1,7 +1,7 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
-<div class="sidebar">
+<aside class="sidebar" id="app-sidebar" aria-label="Customer navigation">
     <div class="logo">
         <i class="bi bi-shield-check fs-3 text-emerald me-2"></i>
         <h3 class="mb-0">ARMS Portal</h3>
@@ -50,4 +50,4 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </a>
         </li>
     </ul>
-</div>
+</aside>

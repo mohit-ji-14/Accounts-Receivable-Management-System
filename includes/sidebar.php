@@ -2,7 +2,7 @@
 $current_script = $_SERVER['SCRIPT_NAME'];
 $base_url = '/ARMS/';
 ?>
-<div class="sidebar">
+<aside class="sidebar" id="app-sidebar" aria-label="Main navigation">
     <div class="logo">
         <i class="bi bi-shield-check fs-3 text-indigo"></i>
         <h3>ARMS Enterprise</h3>
@@ -51,4 +51,4 @@ $base_url = '/ARMS/';
             </a>
         </li>
     </ul>
-</div>
+</aside>

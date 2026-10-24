@@ -18,6 +18,9 @@ if ($hour < 12) {
 
 <div class="top-navbar">
     <div class="d-flex align-items-center gap-3">
+        <button class="sidebar-toggle" type="button" aria-label="Open navigation menu" aria-controls="app-sidebar" aria-expanded="false" data-sidebar-toggle>
+            <i class="bi bi-list" aria-hidden="true"></i>
+        </button>
         <div>
             <h1 class="page-title mb-1">
                 <?= htmlspecialchars($page_header ?? 'Customer Portal') ?>

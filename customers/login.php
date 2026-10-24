@@ -8,193 +8,120 @@ if (isset($_SESSION['customer_id'])) {
 
 $error = $_GET['error'] ?? '';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Login | ARMS</title>
-
-    <!-- Google Font -->
+    <meta name="theme-color" content="#102b27">
+    <title>Customer sign in | ARMS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-
-            background: linear-gradient(
-            135deg,
-            #022c22 0%,
-            #065f46 45%,
-            #059669 100%
-        );
-}
-
-        .login-card {
-            width: 100%;
-            max-width: 460px;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 18px;
-            padding: 40px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-        }
-
-        .logo {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 18px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg,#10b981,#047857);
-            color: #fff;
-            font-size: 30px;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, .35);
-        }
-
-        h2 {
-            text-align: center;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #6b7280;
-            margin-bottom: 30px;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #475569;
-        }
-
-        .input-group-text {
-            background: #f8fafc;
-        }
-
-        .btn-login{
-        background:linear-gradient(135deg,#10b981,#047857);
-        border:none;
-        color:white;
-        padding:12px;
-        font-weight:600;
-        border-radius:8px;
-        transition:.3s;
-        }
-        .btn-login:hover{
-        background:linear-gradient(135deg,#059669,#065f46);
-        transform:translateY(-2px);
-        box-shadow:0 12px 25px rgba(16,185,129,.35);
-        }
-
-        .footer-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .footer-link a {
-            text-decoration: none;
-            font-weight: 500;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
-
-<body>
-
-    <div class="login-card">
-
-        <div class="logo">
-            <i class="bi bi-person-badge-fill"></i>
-        </div>
-
-        <h2 style="color:#047857";>Customer Portal </h2>
-
-        <p class="subtitle">
-            Accounts Receivable Management System
-        </p>
-
-        <?php if ($error): ?>
-            <div class="alert alert-danger">
-                <i class="bi bi-exclamation-circle-fill me-2"></i>
-                <?= htmlspecialchars($error) ?>
-            </div>
-        <?php endif; ?>
-
-        <form action="customer_auth.php" method="POST">
-
-            <div class="mb-3">
-                <label class="form-label">Email Address</label>
-
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-envelope"></i>
-                    </span>
-
-                    <input
-                        type="email"
-                        name="email"
-                        class="form-control"
-                        placeholder="customer@email.com"
-                        required>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label">Password</label>
-
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-lock"></i>
-                    </span>
-
-                    <input
-                        type="password"
-                        name="password"
-                        class="form-control"
-                        placeholder="Enter Password"
-                        required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-login w-100">
-                Customer Sign In
-                <i class="bi bi-arrow-right ms-2"></i>
-            </button>
-
-        </form>
-
-        <div class="footer-link">
-            <a href="../index.php"class="text-success fw-semibold">
-                <i class="bi bi-arrow-left"></i>
-                Back to Admin Login
+<body class="auth-page auth-page--customer">
+    <main class="auth-layout">
+        <section class="auth-showcase" aria-label="ARMS customer portal information">
+            <a class="brand" href="../index.php" aria-label="ARMS home">
+                <span class="brand-mark"><i class="bi bi-layers-half" aria-hidden="true"></i></span>
+                <span>ARMS<span class="brand-period">.</span></span>
             </a>
-        </div>
 
-    </div>
+            <div class="showcase-copy">
+                <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR CUSTOMER PORTAL</span>
+                <h1>Your business, <span>in good balance.</span></h1>
+                <p>View invoices, follow payments, and stay connected with your account — whenever you need.</p>
+            </div>
 
+            <div class="preview-card customer-preview" aria-hidden="true">
+                <div class="preview-heading">
+                    <div>
+                        <span class="preview-label">Your account</span>
+                        <strong>Everything in one view</strong>
+                    </div>
+                    <span class="preview-icon"><i class="bi bi-person-check"></i></span>
+                </div>
+                <div class="portal-feature">
+                    <span class="feature-icon"><i class="bi bi-receipt"></i></span>
+                    <span><strong>Invoices</strong><small>Review current and past invoices</small></span>
+                    <i class="bi bi-chevron-right feature-chevron"></i>
+                </div>
+                <div class="portal-feature">
+                    <span class="feature-icon"><i class="bi bi-credit-card"></i></span>
+                    <span><strong>Payments</strong><small>Keep track of your payment history</small></span>
+                    <i class="bi bi-chevron-right feature-chevron"></i>
+                </div>
+                <div class="portal-feature">
+                    <span class="feature-icon"><i class="bi bi-file-earmark-text"></i></span>
+                    <span><strong>Statements</strong><small>Access your account statements</small></span>
+                    <i class="bi bi-chevron-right feature-chevron"></i>
+                </div>
+            </div>
+
+            <div class="showcase-footer">
+                <span><i class="bi bi-shield-check" aria-hidden="true"></i> Your account information stays protected</span>
+                <span>ARMS · Customer portal</span>
+            </div>
+        </section>
+
+        <section class="auth-panel" aria-labelledby="login-title">
+            <div class="auth-form-wrap">
+                <div class="mobile-brand brand">
+                    <span class="brand-mark"><i class="bi bi-layers-half" aria-hidden="true"></i></span>
+                    <span>ARMS<span class="brand-period">.</span></span>
+                </div>
+                <div class="form-heading">
+                    <span class="form-kicker">CUSTOMER PORTAL</span>
+                    <h2 id="login-title">Welcome back</h2>
+                    <p>Sign in to manage your account.</p>
+                </div>
+
+                <?php if ($error): ?>
+                    <div class="auth-alert" role="alert">
+                        <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>
+                        <span><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></span>
+                    </div>
+                <?php endif; ?>
+
+                <form action="customer_auth.php" method="POST">
+                    <div class="field">
+                        <label for="email">Email address</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-envelope" aria-hidden="true"></i>
+                            <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="username" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field-label-row">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="input-wrap">
+                            <i class="bi bi-lock" aria-hidden="true"></i>
+                            <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+                            <button class="password-toggle" type="button" data-password-toggle aria-label="Show password" aria-pressed="false">
+                                <i class="bi bi-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="submit-button" type="submit">
+                        <span>Sign in to customer portal</span>
+                        <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+                <div class="portal-switch">
+                    <span>Part of the ARMS team?</span>
+                    <a href="../index.php">Go to staff sign in <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+                </div>
+
+                <p class="privacy-note"><i class="bi bi-shield-lock" aria-hidden="true"></i> Your account is protected with secure sign-in.</p>
+            </div>
+        </section>
+    </main>
+    <script src="../assets/js/login.js"></script>
 </body>
-
 </html>
